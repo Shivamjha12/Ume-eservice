@@ -1,15 +1,26 @@
 {% load static %}
 {% load crispy_forms_tags %}
+<style>
+    .errorlist{
+        color:red;
+        }
+</style>
+<html>
+<body style="background-color:#87CEEB;" >
 <h1 class="text-center"> Register Here </h1>
+<div style="background-color:#f4db87;">
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="container">
     <fieldset class="form-group">
         <legend class="border-bottom mb-4"> Make your account </legend>
-        {{ form|crispy }}        
+        {% crispy form %}        
     </fieldset>
     <div class="form-group">
-        <button type="submit" class="btn-success"> Submit </button>
+        <button type="submit" class="btn btn-primary btn-lg signup-button">Signup</button>
     </div>
     </div>
     </form>
+</div>
+</body>
+</html>

@@ -9,7 +9,7 @@ from django.conf import settings
 from django.core.validators import RegexValidator
 from multiselectfield import MultiSelectField
 # Create your models here.ff
-
+from django.db.models import Q
 
 
 class CustomUser(AbstractBaseUser,PermissionsMixin):
@@ -52,8 +52,6 @@ class CustomUser(AbstractBaseUser,PermissionsMixin):
             self.type.append(self.default_type)
         return super().save(*args, **kwargs)
 
-
-
 class customer(models.Model):
     user   = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     firstName = models.CharField(max_length=100)
@@ -72,6 +70,42 @@ class sellerPost(models.Model):
 class serviceProvider(models.Model):
     user  = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     postbyseller = models.ForeignKey(sellerPost,on_delete=models.CASCADE)
+
+    
+class SellerManager(models.Manager):
+    def get_queryset(self, *args, **kwargs):
+        #return super().get_queryset(*args, **kwargs).filter(type = CustomUser.Types.SELLER)
+        return super().get_queryset(*args, **kwargs).filter(Q(type__contains = CustomUser.Types.SELLER))
+
+class CustomerManager(models.Manager):
+    def get_queryset(self, *args, **kwargs):
+        #return super().get_queryset(*args, **kwargs).filter(type = CustomUser.Types.CUSTOMER)
+        return super().get_queryset(*args, **kwargs).filter(Q(type__contains = CustomUser.Types.CUSTOMER))
+
+class seller(CustomUser):
+    default_type= CustomUser.Types.SELLER
+    object = SellerManager()
+    class Meta:
+        proxy = True
+    
+    def sell():
+        print("Seller can sell")
+    @property
+    def showAditional(self):
+        return self.serviceProvider
+
+class buyer(CustomUser):
+    default_type= CustomUser.Types.CUSTOMER
+    object = CustomerManager()
+    class Meta:
+        proxy = True
+    def buy():
+        print("buyer can buy")
+    @property
+    def showAditional(self):
+        return self.customer
+
+
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)

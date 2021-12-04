@@ -19,5 +19,6 @@ from accounts import views
 
 
 urlpatterns = [
-    path('signup/', views.UserRegeatration.as_view(), name='register'),
+    path('signup/', views.UserRegeatration.as_view(), name='signup'),
+    path('login/', views.UserRegeatration.as_view(), name='login'),
 ]

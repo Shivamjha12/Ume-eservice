@@ -43,4 +43,6 @@ class CustomUserAdmin(UserAdmin):
 admin.site.register(customer)
 admin.site.register(serviceProvider)
 admin.site.register(sellerPost)
+admin.site.register(seller)
+admin.site.register(buyer)
 admin.site.register(CustomUser,CustomUserAdmin)

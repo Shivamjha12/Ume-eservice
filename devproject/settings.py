@@ -123,3 +123,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = "accounts.CustomUser" 
+LOGIN_URL = 'user_login'
+LOGIN_REDIRECT_URL = ''
+LOGIN_REDIRECT_URL = ''

@@ -13,16 +13,27 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
         fields = '__all__'
-class customerForm(forms.ModelForm):
+# class customerForm(forms.ModelForm):
+#     class Meta:
+#         model = customer
+#         fields="__all__"
+# class sellerForm(forms.ModelForm):
+#     class Meta:
+#         model = serviceProvider
+#         fields = '__all__'
+
+class BuyerForm(UserCreationForm):
     class Meta:
-        model = customer
-        fields="__all__"
-class sellerForm(forms.ModelForm):
+        model = buyer
+        fields= ('email','phone',)
+
+class SellerForm(UserCreationForm):
     class Meta:
-        model = serviceProvider
+        model = seller
+        fields= ('email','phone',)
+
+class sellerSignupForm(forms.ModelForm):
+    class Meta:
+        model = seller
         fields = '__all__'
-
-
-
-
 

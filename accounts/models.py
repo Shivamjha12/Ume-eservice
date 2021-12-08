@@ -69,7 +69,13 @@ class sellerPost(models.Model):
 
 class serviceProvider(models.Model):
     user  = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
-    postbyseller = models.ForeignKey(sellerPost,on_delete=models.CASCADE)
+    first_name = models.CharField(default=" ",max_length=20)
+    last_name = models.CharField(default=" ",max_length=20)
+    your_Address = models.CharField(default=" ",max_length=150)
+    langitude_loc = models.IntegerField(default=0)
+    longitude_loc = models.IntegerField(default=0)
+    adharcard = models.ImageField(default=" ",upload_to='media/images/adharcard')
+    postbyseller = models.ForeignKey(sellerPost,on_delete=models.CASCADE,null=True, blank=True)
 
     
 class SellerManager(models.Manager):

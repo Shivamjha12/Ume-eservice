@@ -33,7 +33,10 @@ class SellerForm(UserCreationForm):
         fields= ('email','phone',)
 
 class sellerSignupForm(forms.ModelForm):
+    # first_name = forms.CharField(max_length=20)
+    # last_name =  forms.CharField(max_length=20)
+    # your_Address = forms.CharField(max_length=150)
     class Meta:
-        model = seller
-        fields = '__all__'
+        model = serviceProvider
+        fields = ('first_name','last_name','your_Address')
 

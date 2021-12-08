@@ -20,3 +20,11 @@ class sellerregistrationform(LoginRequiredMixin,CreateView):
     template_name = 'registration_seller.html'
     success_url = reverse_lazy('form_seller')
     form_class = sellerSignupForm
+    
+    def form_valid(self, form):
+        user = self.request.user
+        user.type.append(user.Types.SELLER)
+        user.save()
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+    

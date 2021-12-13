@@ -10,6 +10,7 @@ from django.core.validators import RegexValidator
 from multiselectfield import MultiSelectField
 # Create your models here.ff
 from django.db.models import Q
+# from ume.models import 
 
 
 class CustomUser(AbstractBaseUser,PermissionsMixin):
@@ -52,22 +53,8 @@ class CustomUser(AbstractBaseUser,PermissionsMixin):
             self.type.append(self.default_type)
         return super().save(*args, **kwargs)
 
-class customer(models.Model):
-    user   = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
-    firstName = models.CharField(max_length=100)
-    lastName = models.CharField(max_length=100)
-    adress = models.CharField(max_length=150)
-    email = models.EmailField(max_length=100)
-class sellerPost(models.Model):
-    user  = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
-    title = models.CharField(max_length=100)
-    description = models.CharField(max_length=300)
-    image = models.ImageField()
-    video = models.URLField()
-    price = models.CharField(max_length=10)
-    tags  = models.CharField(max_length=100)
 
-class serviceProvider(models.Model):
+class serviceProviderDetails(models.Model):
     user  = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     first_name = models.CharField(default=" ",max_length=20)
     last_name = models.CharField(default=" ",max_length=20)
@@ -75,7 +62,7 @@ class serviceProvider(models.Model):
     langitude_loc = models.IntegerField(default=0)
     longitude_loc = models.IntegerField(default=0)
     adharcard = models.ImageField(default=" ",upload_to='media/images/adharcard')
-    postbyseller = models.ForeignKey(sellerPost,on_delete=models.CASCADE,null=True, blank=True)
+    # postbyseller = models.ForeignKey(sellerPost,on_delete=models.CASCADE,null=True, blank=True)
 
     
 class SellerManager(models.Manager):
@@ -88,7 +75,7 @@ class CustomerManager(models.Manager):
         #return super().get_queryset(*args, **kwargs).filter(type = CustomUser.Types.CUSTOMER)
         return super().get_queryset(*args, **kwargs).filter(Q(type__contains = CustomUser.Types.CUSTOMER))
 
-class seller(CustomUser):
+class ServiceProvider(CustomUser):
     default_type= CustomUser.Types.SELLER
     object = SellerManager()
     class Meta:
@@ -100,7 +87,7 @@ class seller(CustomUser):
     def showAditional(self):
         return self.serviceProvider
 
-class buyer(CustomUser):
+class customer(CustomUser):
     default_type= CustomUser.Types.CUSTOMER
     object = CustomerManager()
     class Meta:
@@ -114,9 +101,9 @@ class buyer(CustomUser):
 
 
 
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_or_save_user_profile(created,instance,*args,**kwargs):
-    print("OKAyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
-    if created:
-        print("heyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
-        customer.objects.create(user=instance)
+# @receiver(post_save, sender=settings.AUTH_USER_MODEL)
+# def create_or_save_user_profile(created,instance,*args,**kwargs):
+#     print("OKAyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
+#     if created:
+#         print("heyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
+#         customer.objects.create(user=instance)

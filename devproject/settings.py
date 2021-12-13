@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'multiselectfield',
     'accounts',
+    'ume',
+    'customerume',
 ]
 
 MIDDLEWARE = [

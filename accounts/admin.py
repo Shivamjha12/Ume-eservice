@@ -4,8 +4,11 @@ from django.contrib.auth.models import User
 from accounts.models import CustomUser
 from accounts.forms import *
 # Register your models here.
+admin.site.site_header = "Ume administration"
+admin.site.site_title = "Ume administration"
+admin.site.index_title = "Welcome to Ume administration"
 class SellerAdditionalInline(admin.TabularInline):
-    model = serviceProvider
+    model = serviceProviderDetails
 class SellerAdmin(admin.ModelAdmin):
     inlines = (
         SellerAdditionalInline,
@@ -42,12 +45,7 @@ class CustomUserAdmin(UserAdmin):
 
     
     
-
-
-
+admin.site.register(serviceProviderDetails)
+admin.site.register(ServiceProvider,SellerAdmin)
 admin.site.register(customer)
-admin.site.register(serviceProvider)
-admin.site.register(sellerPost)
-admin.site.register(seller,SellerAdmin)
-admin.site.register(buyer)
 admin.site.register(CustomUser,CustomUserAdmin)

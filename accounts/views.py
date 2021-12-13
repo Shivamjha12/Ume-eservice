@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,HttpResponse,HttpResponseRedirect,redirect
 from django.views.generic import CreateView
 from django.contrib.auth.views import LoginView
+from django.views.generic import View
+from django.contrib.auth import authenticate,login,logout
 # ,LoginView
 # Create your views here.
 from crispy_forms.helper import FormHelper
@@ -13,8 +15,32 @@ class UserRegeatration(CreateView):
     form_class = CustomUserCreationForm
     success_url = '/accounts/signup/'
     
-class Login(LoginView):
-    template_name = 'login.html'
+# class Login(LoginView):
+#     template_name = 'login.html'
+#     success_url ='/home'
+    
+class Login(View):
+    def post(self, request):
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+
+                return redirect('/home')
+            else:
+                return HttpResponse("Inactive user.")
+        else:
+            return HttpResponseRedirect(settings.LOGIN_URL)
+
+        return render(request, "index.html")
+
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return HttpResponseRedirect(settings.LOGIN_URL)
     
 class sellerregistrationform(LoginRequiredMixin,CreateView):
     template_name = 'registration_seller.html'
@@ -27,4 +53,5 @@ class sellerregistrationform(LoginRequiredMixin,CreateView):
         user.save()
         form.instance.user = self.request.user
         return super().form_valid(form)
+
     

@@ -24,12 +24,12 @@ class CustomUserChangeForm(UserChangeForm):
 
 class BuyerForm(UserCreationForm):
     class Meta:
-        model = buyer
+        model = customer
         fields= ('email','phone',)
 
 class SellerForm(UserCreationForm):
     class Meta:
-        model = seller
+        model = ServiceProvider
         fields= ('email','phone',)
 
 class sellerSignupForm(forms.ModelForm):
@@ -37,6 +37,6 @@ class sellerSignupForm(forms.ModelForm):
     # last_name =  forms.CharField(max_length=20)
     # your_Address = forms.CharField(max_length=150)
     class Meta:
-        model = serviceProvider
+        model = serviceProviderDetails
         fields = ('first_name','last_name','your_Address')
 

@@ -4,8 +4,9 @@ from ume import views
 
 
 urlpatterns = [
-    path('home', views.home, name='home'),
+    path('', views.dashboard, name='dhashboard'),
     path('addjob', views.addjob, name='addjob'),
-    path('jobs', views.jobs, name='addjob')
+    path('jobslist', views.userjoblist, name='joblist'),
+    
 ]
  

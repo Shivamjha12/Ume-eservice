@@ -25,7 +25,7 @@ SECRET_KEY = '%r$x6fj^-7xy-o7&fvscy970*s-%a-r!((9pp_gq#d*)ma4ka6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['www.ume.com','seller']
 
 
 # Application definition

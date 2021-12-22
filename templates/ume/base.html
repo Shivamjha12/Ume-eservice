@@ -35,7 +35,7 @@
             </li>
             {% if user.is_authenticated %}
             <li class="nav-item {% block login_navbar %} {% endblock %}">
-              <a class="nav-link" href="profile" >welcome {{user.type}}</a> 
+              <a class="nav-link" href="profile"> welcome {{user.type}}</a> 
             </li>
             <li class="nav-item ">
             <form method="post" action="{% url 'logout' %}">

@@ -37,14 +37,15 @@ class Login(View):
 
         return render(request, "index.html")
 
-class LogoutView(View):
-    def get(self, request):
+def logoutuser(request):
+    if request.method == "POST":
         logout(request)
-        return HttpResponseRedirect(settings.LOGIN_URL)
+        return redirect('user_login')
+    return redirect('home')
     
 class sellerregistrationform(LoginRequiredMixin,CreateView):
     template_name = 'registration_seller.html'
-    success_url = reverse_lazy('form_seller')
+    success_url = reverse_lazy('user_login')
     form_class = sellerSignupForm
     
     def form_valid(self, form):

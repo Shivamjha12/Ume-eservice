@@ -9,7 +9,13 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+# import environ
+# env = environ.Env(
+#     # set casting, default value,  if DEBUG=True/On in .env then True otherwise False
+#     DEBUG=(bool, False)
+# )
+# # reading .env file
+# environ.Env.read_env()
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +31,7 @@ SECRET_KEY = '%r$x6fj^-7xy-o7&fvscy970*s-%a-r!((9pp_gq#d*)ma4ka6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.ume.com','seller']
+ALLOWED_HOSTS = ['www.ume.com','seller.ume.com','127.0.0.1',]
 
 
 # Application definition
@@ -42,9 +48,11 @@ INSTALLED_APPS = [
     'accounts',
     'ume',
     'customerume',
+    'django_hosts',
 ]
 
 MIDDLEWARE = [
+    'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -52,9 +60,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_hosts.middleware.HostsResponseMiddleware',
 ]
-
-ROOT_URLCONF = 'devproject.urls'
+ROOT_URLCONF  =  'devproject.urls'
+ROOT_HOSTCONF =  'devproject.hosts'
+DEFAULT_HOST  =  'seller'
+PARENT_HOST   =  'ume'
+HOST_PORT='8000'
 
 TEMPLATES = [
     {
@@ -125,6 +137,22 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = "accounts.CustomUser" 
-LOGIN_URL = 'login'
+LOGIN_URL = 'accounts/login'
 LOGIN_REDIRECT_URL = ''
-LOGIN_REDIRECT_URL = ''
+LOGOUT_REDIRECT_URL = ''
+
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.ERROR : 'danger' # we are overridding the 
+}
+
+
+#SMTP SETTINGS
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = True
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER ='jhasapna544@gmail.com'
+EMAIL_HOST_PASSWORD = 'kmkkoxrtixeqpvyu'
+DEFAULT_FROM_EMAIL = 'Testing <jhasapna544@gmail.com>'

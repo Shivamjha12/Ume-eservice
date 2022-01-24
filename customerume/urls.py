@@ -5,5 +5,8 @@ from customerume import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('categories',views.cat,name='categories'),
+    path('profile',views.profile,name='profile')
+    
 ]
  

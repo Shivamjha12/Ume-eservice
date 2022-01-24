@@ -7,21 +7,18 @@ from accounts.urls import *
 # Create your views here.
 
 def addjob(request): 
-    if request.method == 'GET':
-        try:
-            user = request.user
-            userType=user.type
-            if str(userType) == "SELLER":
-                    # form         = ServiceProviderPost(request.POST)
-                    # addjob      = form.save(commit=False)
-                    # addjob.user = request.user
-                    # addjob.save()
-                    return redirect('home')
-            elif str(userType) == "CUSTOMER":
-                return redirect('form_seller')
-        except ValueError:
-            return render(request, 'home.html',{'error':'Bad data request'} )
-        return render(request, 'ume/jobs.html',{'form':ServiceProviderPost()})
+    user = request.user
+    userType=user.type
+    # if str(userType) == "SELLER":
+    if request.method=="POST":
+        form         = ServiceProviderPost(request.POST)
+        addjob      = form.save(commit=False)
+        addjob.user = user
+        addjob.save()
+        return redirect('/')
+    elif str(userType) == "CUSTOMER":
+        return redirect('form_seller')
+    return render(request, 'ume/jobs.html',{'form':ServiceProviderPost()})
 def userjoblist(request):
     user=request.user
     joblist = sellerPost.objects.filter(user=user)

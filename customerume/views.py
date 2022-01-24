@@ -8,3 +8,8 @@ from accounts.urls import *
 
 def index(request):
     return render(request,'ume/home.html')
+def cat(request):
+    return render(request,'ume/cat.html')
+def profile(request):
+    name = request.user
+    return render(request,'ume/profile.html',{name:'name'})

@@ -1,4 +1,5 @@
-"""devproject URL Configuration
+"""
+devproject URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
@@ -13,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path, include
 from accounts import views 
@@ -20,8 +22,9 @@ from accounts import views
 
 urlpatterns = [
     path('signup/', views.UserRegeatration.as_view(), name='signup'),
-    path('login', views.Login.as_view(), name='user_login'),
+    path('login', views.login, name='user_login'),
     path('logout', views.logoutuser, name='logout'),    
     path('seller.register/', views.sellerregistrationform.as_view(), name='form_seller'),
+    path('activate/<slug:uidb64>/<slug:token>/', views.activate, name='activate'),
 ]
  

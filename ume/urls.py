@@ -5,8 +5,9 @@ from ume import views
 
 urlpatterns = [
     path('', views.dashboard, name='dhashboard'),
+    path('accounts/', include('accounts.urls')),
     path('addjob', views.addjob, name='addjob'),
-    path('jobslist', views.userjoblist, name='joblist'),
+    path('jobslist', views.userjoblist, name='jobslist'),
     
 ]
  
